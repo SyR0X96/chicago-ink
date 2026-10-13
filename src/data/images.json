@@ -1,0 +1,152 @@
+{
+  "gallery": {
+    "vader-sleeve-detail": {
+      "w": 3024,
+      "h": 4032
+    },
+    "vader-fullsleeve": {
+      "w": 1004,
+      "h": 1716
+    },
+    "berg-wanderer": {
+      "w": 1008,
+      "h": 1702
+    },
+    "auge-schmetterling": {
+      "w": 952,
+      "h": 1214
+    },
+    "fc-koeln": {
+      "w": 882,
+      "h": 1614
+    },
+    "motorradfahrer": {
+      "w": 1006,
+      "h": 1704
+    },
+    "portrait-zigarre": {
+      "w": 1080,
+      "h": 1502
+    },
+    "frauengesicht": {
+      "w": 1348,
+      "h": 1808
+    },
+    "wolf-augen": {
+      "w": 1610,
+      "h": 1814
+    },
+    "wolf-fullsleeve": {
+      "w": 3024,
+      "h": 4032
+    },
+    "zeus": {
+      "w": 1012,
+      "h": 1796
+    },
+    "loewe-mit-jungen": {
+      "w": 558,
+      "h": 1020
+    },
+    "erzengel": {
+      "w": 560,
+      "h": 1020
+    },
+    "huette-hund-sleeve": {
+      "w": 574,
+      "h": 1020
+    },
+    "adler": {
+      "w": 1810,
+      "h": 1812
+    },
+    "yoda": {
+      "w": 1016,
+      "h": 1680
+    },
+    "engel-backpiece": {
+      "w": 1014,
+      "h": 1680
+    },
+    "i-am-enough": {
+      "w": 1524,
+      "h": 1512
+    },
+    "es-pennywise": {
+      "w": 1300,
+      "h": 1800
+    },
+    "justitia": {
+      "w": 924,
+      "h": 1686
+    },
+    "kinderportraet": {
+      "w": 3024,
+      "h": 4032
+    },
+    "ruecken-totenkopf": {
+      "w": 2190,
+      "h": 2920
+    },
+    "anubis": {
+      "w": 945,
+      "h": 1433
+    },
+    "berg-huette-sleeve": {
+      "w": 945,
+      "h": 1647
+    },
+    "schwarze-witwe": {
+      "w": 945,
+      "h": 1116
+    },
+    "anime-bein": {
+      "w": 945,
+      "h": 1227
+    },
+    "fullsleeve-seite": {
+      "w": 945,
+      "h": 1681
+    },
+    "leguan": {
+      "w": 797,
+      "h": 1696
+    },
+    "wildschwein": {
+      "w": 2410,
+      "h": 3214
+    },
+    "krieger": {
+      "w": 1536,
+      "h": 2048
+    },
+    "baer": {
+      "w": 1022,
+      "h": 1700
+    }
+  },
+  "artists": {
+    "tanja": {
+      "w": 920,
+      "h": 1388
+    },
+    "sava": {
+      "w": 924,
+      "h": 1550
+    },
+    "hermes": {
+      "w": 916,
+      "h": 1204
+    }
+  },
+  "studio": {
+    "studio-empfang": {
+      "w": 4032,
+      "h": 3024
+    },
+    "studio-arbeit": {
+      "w": 945,
+      "h": 1262
+    }
+  }
+}
