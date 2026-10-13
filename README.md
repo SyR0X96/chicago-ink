@@ -57,4 +57,4 @@ public/img/                     optimierte Bilder (WebP)
 
 ## Datenschutz
 
-Keine Cookies, kein Tracking. Schriften liegen lokal, es gibt keine Verbindung zu Google Fonts. Google Maps lädt erst nach Klick. WhatsApp-Links sind einfache Links ohne Widget-Skript. Bilder im Konfigurator verlassen das Gerät nicht.
+Keine Cookies, kein Tracking. Schriften liegen lokal, es gibt keine Verbindung zu Google Fonts. Die OpenStreetMap-Karte lädt erst nach Klick. WhatsApp-Links sind einfache Links ohne Widget-Skript. Bilder im Konfigurator verlassen das Gerät nicht.

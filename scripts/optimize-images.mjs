@@ -49,7 +49,6 @@ const gallery = {
 };
 
 const artists = {
-  tanja: path.join(SRC, 'material/artists/Tanja.png'),
   sava: path.join(SRC, 'material/artists/Sava.png'),
   hermes: path.join(SRC, 'material/artists/Hermes.png'),
 };

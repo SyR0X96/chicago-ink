@@ -207,30 +207,9 @@ function heroIntro() {
 //  Preloader
 // ---------------------------------------------------------------------------
 async function preload(heroReady) {
-  const count = $('[data-count]');
-  const bar = $('.preloader__bar span');
-  const state = { v: 0 };
-  const min = new Promise((r) => setTimeout(r, reduced ? 200 : 1200));
+  // Logo nur so lange zeigen, bis der 3D-Hero bereit ist (höchstens 4 s)
   const max = new Promise((r) => setTimeout(r, 4000));
-  const tween = gsap.to(state, {
-    v: 90,
-    duration: 2.2,
-    ease: 'power2.out',
-    onUpdate: () => {
-      count.textContent = Math.round(state.v);
-      bar.style.transform = `scaleX(${state.v / 100})`;
-    },
-  });
-  await Promise.race([Promise.all([heroReady, document.fonts.ready, min]), max]);
-  tween.kill();
-  await gsap.to(state, {
-    v: 100,
-    duration: 0.35,
-    onUpdate: () => {
-      count.textContent = Math.round(state.v);
-      bar.style.transform = `scaleX(${state.v / 100})`;
-    },
-  });
+  await Promise.race([Promise.all([heroReady, document.fonts.ready]), max]);
   await gsap.to('.preloader__inner', { opacity: 0, y: -20, duration: 0.45, ease: 'power2.in' });
   gsap.to('.preloader', { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.inOut', onComplete: () => $('.preloader').remove() });
   document.body.classList.remove('is-loading');
@@ -318,38 +297,6 @@ function initReveals() {
   const len = path.getTotalLength();
   gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
   gsap.to(path, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: '.process__wrap', start: 'top 70%', end: 'bottom 60%', scrub: true } });
-}
-
-// ---------------------------------------------------------------------------
-//  Stile: Bild folgt der Maus
-// ---------------------------------------------------------------------------
-function initStyleHover() {
-  const box = $('.style-hover');
-  if (!finePointer) return;
-  // Alle Vorschaubilder vorab laden und übereinanderlegen -> nie ein falsches Bild
-  const slugs = [...new Set($$('.style-row').map((r) => r.dataset.img).filter(Boolean))];
-  box.innerHTML = slugs.map((s) => `<img src="${imgUrl('gallery', s, 640)}" data-slug="${s}" alt="" decoding="async" />`).join('');
-  const xTo = gsap.quickTo(box, 'x', { duration: 0.6, ease: 'power3' });
-  const yTo = gsap.quickTo(box, 'y', { duration: 0.6, ease: 'power3' });
-  const rTo = gsap.quickTo(box, 'rotation', { duration: 0.8, ease: 'power3' });
-  let lastX = 0;
-  $('.style-list').addEventListener('mousemove', (e) => {
-    xTo(e.clientX);
-    yTo(e.clientY);
-    rTo(gsap.utils.clamp(-12, 12, (e.clientX - lastX) * 0.6));
-    lastX = e.clientX;
-  });
-  window.addEventListener('scroll', () => box.classList.remove('is-on'), { passive: true });
-  $$('.style-row').forEach((row) => {
-    row.addEventListener('mouseenter', (e) => {
-      const slug = row.dataset.img;
-      if (!slug) return box.classList.remove('is-on');
-      if (!box.classList.contains('is-on')) gsap.set(box, { x: e.clientX, y: e.clientY });
-      $$('img', box).forEach((img) => img.classList.toggle('is-active', img.dataset.slug === slug));
-      box.classList.add('is-on');
-    });
-    row.addEventListener('mouseleave', () => box.classList.remove('is-on'));
-  });
 }
 
 // ---------------------------------------------------------------------------
@@ -454,7 +401,7 @@ function initCrew() {
       const photo = a.photo
         ? `<img src="${imgUrl('artists', a.photo, 900)}" srcset="${imgUrl('artists', a.photo, 520)} 520w, ${imgUrl('artists', a.photo, 900)} 900w" sizes="(max-width: 760px) 90vw, 25vw" alt="${a.name}" loading="lazy" width="${m.w}" height="${m.h}" />`
         : `<div class="crew-card__placeholder" aria-hidden="true"><span>${a.name[0]}</span><small>Foto folgt</small></div>`;
-      const msg = a.id === 'tanja' ? 'Hi Tanja! 👋 Ich hätte eine Frage zu einem Termin:' : `Hi ${a.name}! 👋 Ich hätte gern ein Tattoo von dir. Meine Idee:`;
+      const msg = `Hi ${a.name}! 👋 Ich hätte gern ein Tattoo von dir. Meine Idee:`;
       const count = gallery.filter((g) => g.artist === a.id).length;
       return `<article class="crew-card" data-tilt>
         <div class="crew-card__media">${photo}<span class="crew-card__role">${a.role}</span></div>
@@ -463,9 +410,9 @@ function initCrew() {
           <ul class="tags">${a.styles.map((s) => `<li>${s}</li>`).join('')}</ul>
           <p>${a.bio}</p>
           <div class="crew-card__actions">
-            <a class="btn btn--wa btn--sm" data-wa="${esc(msg)}" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>${a.id === 'tanja' ? 'Frag Tanja' : `Bei ${a.name} anfragen`}</a>
+            <a class="btn btn--wa btn--sm" data-wa="${esc(msg)}" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>Bei ${a.name} anfragen</a>
             ${a.instagram ? `<a class="icon-link" href="${a.instagram}" target="_blank" rel="noopener" aria-label="${a.name} auf Instagram"><svg class="ico"><use href="#i-ig"/></svg></a>` : ''}
-            ${count ? `<button class="text-link" data-show-artist="${a.id}">${count} Arbeiten ansehen</button>` : ''}
+            ${count ? `<button class="text-link" data-show-artist="${a.id}">${count} ${count === 1 ? 'Arbeit' : 'Arbeiten'} ansehen</button>` : ''}
           </div>
         </div>
       </article>`;
@@ -635,8 +582,9 @@ function initReviews() {
 // ---------------------------------------------------------------------------
 function initMap() {
   $('[data-map-load]').addEventListener('click', () => {
-    const q = encodeURIComponent(`${site.address.street}, ${site.address.zip} ${site.address.city}`);
-    $('[data-map]').innerHTML = `<iframe title="Standort Chicago Ink auf Google Maps" src="https://maps.google.com/maps?q=${q}&t=m&z=16&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`;
+    const { lat, lon } = site.geo;
+    const bbox = [lon - 0.006, lat - 0.002, lon + 0.006, lat + 0.002].map((v) => v.toFixed(4)).join(',');
+    $('[data-map]').innerHTML = `<iframe title="Standort Chicago Ink auf OpenStreetMap" src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}" loading="lazy"></iframe>`;
   });
 }
 
@@ -651,7 +599,7 @@ function initQuick() {
       type = b.dataset.v;
       $$('[data-q-type] button', form).forEach((x) => x.classList.toggle('is-active', x === b));
       const idea = form.elements.idea;
-      idea.placeholder = type === 'Piercing' ? 'Welches Piercing? Ohr, Nase, Body …' : type === 'Frage' ? 'Deine Frage …' : 'Motiv, Größe, Körperstelle, Wunschtermin …';
+      idea.placeholder = type === 'Frage' ? 'Deine Frage …' : 'Motiv, Größe, Körperstelle, Wunschtermin …';
     })
   );
   const build = () => {
@@ -735,7 +683,6 @@ initHours();
 initScroll();
 const heroReady = initHero();
 initReveals();
-initStyleHover();
 initMarquee();
 initShowcase();
 initConfigurator();

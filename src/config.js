@@ -29,6 +29,10 @@ export const site = {
     city: 'Erftstadt',
   },
 
+  // Position für die OpenStreetMap-Karte (aus Brancheneinträgen zur Hausnummer 33,
+  // bei Bedarf auf openstreetmap.org per Rechtsklick „Adresse anzeigen“ genauer bestimmen)
+  geo: { lat: 50.8376, lon: 6.7423 },
+
   // Wochentage: 0 = Sonntag … 6 = Samstag. null = geschlossen
   hours: {
     1: ['12:00', '18:00'],
@@ -82,16 +86,6 @@ export const artists = [
     instagram: '',
     handle: '',
     photo: null,
-  },
-  {
-    id: 'tanja',
-    name: 'Tanja',
-    role: 'Storemanagerin',
-    styles: ['Termine', 'Beratung', 'Piercing-Anfragen'],
-    bio: 'Dein erster Kontakt im Studio: Termine, Fragen, Organisation – und dafür, dass du dich vom ersten Moment an wohlfühlst.',
-    instagram: 'https://www.instagram.com/tanja.einfach.leben/',
-    handle: '@tanja.einfach.leben',
-    photo: 'tanja',
   },
 ];
 
